@@ -19,17 +19,7 @@ import com.sun.btrace.annotations.Self;
  */
 @BTrace
 public class DebugSample {
-    
-    @OnMethod(clazz="com.kuyun.cards.controller.general.GeneralCardAction",
-              method="deleteGeneralCard"
-              ,location=@Location(Kind.ENTRY)
-    )
-    public static void printOnEntry(@Self Object targetInstance, @ProbeMethodName String probeMethod,AnyType[] args) {
-        BTraceUtils.println("----------------------------------------------------------");
-        BTraceUtils.println(strcat("Start call in method",probeMethod));
-        BTraceUtils.printFields(targetInstance);
-    }
-    
+     
     /*
      * ================================================
      * Note: This is very tricky this method can NOT have parameter AnyType[] args, 
@@ -38,17 +28,18 @@ public class DebugSample {
      * ================================================
      */
     @OnMethod(clazz="com.kuyun.cards.controller.general.GeneralCardAction",
-              method="deleteGeneralCard"
+              method="deleteLabelInfo"
               ,location=@Location(Kind.RETURN)
     )
-    public static void printOnReturn(@Self Object targetInstance, @ProbeMethodName String probeMethod,@Duration long duration) {
-        BTraceUtils.println("----------------------------------------------------------");
+    public static void printOnReturn(@Self Object targetInstance,Long id,Integer card_type, @ProbeMethodName String probeMethod,@Duration long duration) {
         BTraceUtils.println(strcat("before return in the method ",probeMethod));
         BTraceUtils.println(strcat("times costing in nano-seconds ",BTraceUtils.str(duration)));
         BTraceUtils.printFields(targetInstance);
 
-        BTraceUtils.println("");
-        BTraceUtils.println("");
+        BTraceUtils.println("-----");
+        BTraceUtils.println(id);
+        BTraceUtils.println(card_type);
+        BTraceUtils.println("-----");
 
     }
     
